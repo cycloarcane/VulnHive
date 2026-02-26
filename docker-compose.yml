@@ -1,5 +1,5 @@
 services:
-  # DB Service (Internal only, no ports exposed to host)
+  # DB Service
   target-db:
     image: mariadb:10.6
     environment:
@@ -57,6 +57,16 @@ services:
     build: ./targets/ssrf
     ports:
       - "127.0.0.1:54326:80"
+    depends_on:
+      - target-db
+    networks:
+      - target-net
+
+  # Auth Failure: Fuel CMS 1.4.1 (Pre-Auth RCE)
+  auth-target:
+    build: ./targets/auth
+    ports:
+      - "127.0.0.1:54327:80"
     depends_on:
       - target-db
     networks:

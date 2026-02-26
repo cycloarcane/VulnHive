@@ -21,7 +21,8 @@ services = {
     "sqli-target": {"name": "Cuppa SQLi", "port": 54323, "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
     "xss-target": {"name": "Wonder XSS", "port": 54324, "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
     "backdoor-target": {"name": "PHP Backdoor", "port": 54325, "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
-    "ssrf-target": {"name": "osTicket SSRF", "port": 54326, "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"}
+    "ssrf-target": {"name": "osTicket SSRF", "port": 54326, "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
+    "auth-target": {"name": "Fuel CMS Auth", "port": 54327, "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"}
 }
 
 recent_logs = deque(maxlen=20)
@@ -32,7 +33,8 @@ ATTACK_PATTERNS = {
     "LFI": re.compile(r"(\.\.|%2e|etc/passwd|etc/shadow|cgi-bin)", re.IGNORECASE),
     "XSS": re.compile(r"(%3C|<)script(%3E|>)", re.IGNORECASE),
     "RCE": re.compile(r"(zerodium|system\(|cmd=|eval\(|id|whoami|ls\s+-)", re.IGNORECASE),
-    "SSRF": re.compile(r"(localhost|127\.0\.0\.1|169\.254\.169\.254|0\.0\.0\.0|http:\/\/|https:\/\/)", re.IGNORECASE)
+    "SSRF": re.compile(r"(localhost|127\.0\.0\.1|169\.254\.169\.254|0\.0\.0\.0|http:\/\/|https:\/\/)", re.IGNORECASE),
+    "AUTH": re.compile(r"(admin|login|auth|fuel|pages\/select\/)", re.IGNORECASE)
 }
 
 def detect_attack(log_line):

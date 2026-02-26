@@ -114,6 +114,14 @@ services:
     networks:
       - target-net
 
+  # Exceptional Conditions: Custom Error-Leaker node
+  error-target:
+    build: ./targets/errors
+    ports:
+      - "127.0.0.1:54333:80"
+    networks:
+      - target-net
+
 networks:
   target-net:
     driver: bridge

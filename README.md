@@ -28,20 +28,20 @@ VulnHive leverages Docker Compose to instantly spin up specific vulnerable nodes
 
 The nodes within VulnHive map directly to critical vulnerabilities identified in modern web applications:
 
-| VulnHive Node | Vulnerability Type | Real-World Software | OWASP Category |
+| VulnHive Node | Vulnerability Type | Real-World Software | OWASP Category (2025) |
 | :--- | :--- | :--- | :--- |
-| **LFI / RCE** | Path Traversal | Apache 2.4.49 (CVE-2021-41773) | A01:2021-Broken Access Control |
-| **Cryptographic**| Weak MD5 Hashing | CuteNews 1.4.5 (Searchsploit 4779) | A02:2021-Cryptographic Failures |
-| **SQLi** | SQL Injection | Cuppa CMS v1.0 (CVE-2022-24265) | A03:2021-Injection |
-| **XSS** | Cross-Site Scripting | WonderCMS 3.4.2 (CVE-2023-41425) | A03:2021-Injection |
-| **RCE** | Command Injection | Atom CMS 2.0 (Searchsploit 50840)| A03:2021-Injection |
-| **PHP Backdoor** | Supply Chain Attack| PHP 8.1.0-dev | A08:2021-Software and Data Integrity Failures |
-| **SSRF** | Request Forgery | osTicket 1.14.2 (CVE-2020-24881) | A10:2021-Server-Side Request Forgery |
-| **Auth Failure** | Pre-Auth RCE | Fuel CMS 1.4.1 (Searchsploit 47138)| A07:2021-Identification and Authentication Failures |
-| **Insecure Design**| IDOR / Broken Access | Bus Pass Management 1.0 (Searchsploit 50263)| A04:2021-Insecure Design |
-| **Security Misconfig**| Default Credentials | CMSimple 5.15 (Searchsploit 39271) | A05:2021-Security Misconfiguration |
-| **Outdated Component**| Log4Shell (RCE) | Log4j 2.14.1 (CVE-2021-44228) | A06:2021-Vulnerable and Outdated Components |
-| **Logging Failure** | Silent Backdoor | Custom Silent-Admin Node | A09:2021-Security Logging and Monitoring Failures |
+| **LFI / RCE** | Path Traversal | Apache 2.4.49 (CVE-2021-41773) | A01: Broken Access Control |
+| **SSRF** | Request Forgery | osTicket 1.14.2 (CVE-2020-24881) | A01: Broken Access Control |
+| **Security Misconfig**| Default Credentials | CMSimple 5.15 (Searchsploit 39271) | A02: Security Misconfiguration |
+| **Outdated Component**| Log4Shell (RCE) | Log4j 2.14.1 (CVE-2021-44228) | A03: Software Supply Chain Failures |
+| **Cryptographic**| Weak MD5 Hashing | SweetRice 1.5.1 (Searchsploit 4779) | A04: Cryptographic Failures |
+| **SQLi** | SQL Injection | Cuppa CMS v1.0 (CVE-2022-24265) | A05: Injection |
+| **XSS** | Cross-Site Scripting | WonderCMS 3.4.2 (CVE-2023-41425) | A05: Injection |
+| **RCE** | Command Injection | Atom CMS 2.0 (Searchsploit 50840)| A05: Injection |
+| **Insecure Design**| IDOR / Broken Access | Bus Pass Management 1.0 (Searchsploit 50263)| A06: Insecure Design |
+| **Auth Failure** | Pre-Auth RCE | Fuel CMS 1.4.1 (Searchsploit 47138)| A07: Authentication Failures |
+| **PHP Backdoor** | Supply Chain Attack| PHP 8.1.0-dev | A08: Software and Data Integrity Failures |
+| **Logging Failure** | Silent Backdoor | Custom Silent-Admin Node | A09: Security Logging & Alerting Failures |
 
 ## Installation & Usage
 

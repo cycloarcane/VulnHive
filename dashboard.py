@@ -17,30 +17,31 @@ from rich.align import Align
 # State
 services = {
     "lfi-target": {"name": "Apache LFI", "port": 54321, "owasp": "A01", "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
-    "crypto-target": {"name": "SweetRice Crypto", "port": 54330, "owasp": "A02", "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
-    "sqli-target": {"name": "Cuppa SQLi", "port": 54323, "owasp": "A03", "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
-    "rce-target": {"name": "Atom CMS RCE", "port": 54322, "owasp": "A03", "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
-    "xss-target": {"name": "Wonder XSS", "port": 54324, "owasp": "A03", "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
-    "design-target": {"name": "Bus Pass IDOR", "port": 54328, "owasp": "A04", "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
-    "config-target": {"name": "CMSimple Config", "port": 54329, "owasp": "A05", "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
-    "outdated-target": {"name": "Log4j Node", "port": 54331, "owasp": "A06", "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
+    "ssrf-target": {"name": "osTicket SSRF", "port": 54326, "owasp": "A01", "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
+    "config-target": {"name": "CMSimple Config", "port": 54329, "owasp": "A02", "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
+    "outdated-target": {"name": "Log4j Node", "port": 54331, "owasp": "A03", "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
+    "crypto-target": {"name": "SweetRice Crypto", "port": 54330, "owasp": "A04", "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
+    "sqli-target": {"name": "Cuppa SQLi", "port": 54323, "owasp": "A05", "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
+    "rce-target": {"name": "Atom CMS RCE", "port": 54322, "owasp": "A05", "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
+    "xss-target": {"name": "Wonder XSS", "port": 54324, "owasp": "A05", "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
+    "design-target": {"name": "Bus Pass IDOR", "port": 54328, "owasp": "A06", "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
     "auth-target": {"name": "Fuel CMS Auth", "port": 54327, "owasp": "A07", "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
     "backdoor-target": {"name": "PHP Backdoor", "port": 54325, "owasp": "A08", "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
     "logging-target": {"name": "Silent Admin", "port": 54332, "owasp": "A09", "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
-    "ssrf-target": {"name": "osTicket SSRF", "port": 54326, "owasp": "A10", "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"}
+    "error-target": {"name": "Error Leaker", "port": 54333, "owasp": "A10", "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"}
 }
 
 OWASP_DESCRIPTIONS = {
-    "A01: Broken Access Control": "Failure to enforce restrictions on what authenticated users can do.",
-    "A02: Cryptographic Failures": "Exposure of sensitive data due to weak or missing encryption.",
-    "A03: Injection": "User-supplied data is not validated, filtered, or sanitised by the application.",
-    "A04: Insecure Design": "Vulnerabilities resulting from fundamental architectural and design flaws.",
-    "A05: Security Misconfiguration": "Insecure default configurations, open storage, or verbose error messages.",
-    "A06: Vulnerable Components": "Using third-party libraries or frameworks with known security flaws.",
-    "A07: Identification/Auth Failures": "Weaknesses in session management or user identity verification.",
+    "A01: Broken Access Control": "Failure to enforce restrictions on what users can do (now includes SSRF).",
+    "A02: Security Misconfiguration": "Insecure default settings or overly verbose error messages (up 3 spots).",
+    "A03: Supply Chain Failures": "Compromised third-party libraries, build systems, or distribution pipelines.",
+    "A04: Cryptographic Failures": "Exposure of sensitive data due to weak or missing encryption.",
+    "A05: Injection": "User data is not sanitised, allowing command or query execution (down 2 spots).",
+    "A06: Insecure Design": "Vulnerabilities resulting from fundamental architectural and design flaws.",
+    "A07: Authentication Failures": "Weaknesses in user identity verification or session management.",
     "A08: Software/Data Integrity": "Failures in protecting code or data from unauthorised modification.",
-    "A09: Logging/Monitoring Failures": "Critical events are not logged, or monitoring is insufficient to detect attacks.",
-    "A10: SSRF": "Web applications fetch remote resources without validating the user-supplied URL."
+    "A09: Logging & Alerting Failures": "Insufficient logging or monitoring to detect and respond to attacks.",
+    "A10: Exceptional Conditions": "Mishandling errors in a way that leads to security bypass or info leaks."
 }
 
 recent_logs = deque(maxlen=20)
@@ -56,7 +57,8 @@ ATTACK_PATTERNS = {
     "IDOR": re.compile(r"(viewid=|id=\d+)", re.IGNORECASE),
     "MISCONFIG": re.compile(r"(&login|\bpasswd=\b|\bpassword=\b|config|setup)", re.IGNORECASE),
     "CRYPTO": re.compile(r"(\.db\.php|hash|md5|base64|encrypt|decrypt)", re.IGNORECASE),
-    "LOG4J": re.compile(r"(\$\{jndi:(ldap|rmi|dns|dns):\/\/)", re.IGNORECASE)
+    "LOG4J": re.compile(r"(\$\{jndi:(ldap|rmi|dns|dns):\/\/)", re.IGNORECASE),
+    "ERRORS": re.compile(r"(crash|error|debug|stack|exception|leak)", re.IGNORECASE)
 }
 
 def detect_attack(log_line):

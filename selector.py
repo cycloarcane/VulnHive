@@ -17,6 +17,7 @@ def get_selection():
         questionary.Choice("Cryptographic Failure (SweetRice 1.5.1)", value="crypto-target"),
         questionary.Choice("Outdated Components (Log4j / Log4Shell)", value="outdated-target"),
         questionary.Choice("Logging Failure (Silent-Admin)", value="logging-target"),
+        questionary.Choice("Exceptional Conditions (Error-Leaker)", value="error-target"),
     ]
 
     selected = questionary.checkbox(

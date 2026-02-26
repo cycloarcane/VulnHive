@@ -1,3 +1,7 @@
+# Lockdown Mode: Zero Egress via Masquerade Disable
+# This allows host -> container (ingress) but blocks container -> internet (egress)
 networks:
   target-net:
-    internal: true
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.enable_ip_masquerade: "false"

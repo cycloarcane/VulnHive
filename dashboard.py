@@ -16,16 +16,17 @@ from rich.align import Align
 
 # State
 services = {
-    "lfi-target": {"name": "Apache LFI", "port": 54321, "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
-    "rce-target": {"name": "Atom CMS RCE", "port": 54322, "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
-    "sqli-target": {"name": "Cuppa SQLi", "port": 54323, "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
-    "xss-target": {"name": "Wonder XSS", "port": 54324, "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
-    "backdoor-target": {"name": "PHP Backdoor", "port": 54325, "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
-    "ssrf-target": {"name": "osTicket SSRF", "port": 54326, "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
-    "auth-target": {"name": "Fuel CMS Auth", "port": 54327, "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
-    "design-target": {"name": "Bus Pass IDOR", "port": 54328, "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
-    "config-target": {"name": "CMSimple Config", "port": 54329, "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
-    "crypto-target": {"name": "CuteNews Crypto", "port": 54330, "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"}
+    "lfi-target": {"name": "Apache LFI", "port": 54321, "owasp": "A01", "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
+    "rce-target": {"name": "Atom CMS RCE", "port": 54322, "owasp": "A03", "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
+    "sqli-target": {"name": "Cuppa SQLi", "port": 54323, "owasp": "A03", "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
+    "xss-target": {"name": "Wonder XSS", "port": 54324, "owasp": "A03", "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
+    "backdoor-target": {"name": "PHP Backdoor", "port": 54325, "owasp": "A08", "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
+    "ssrf-target": {"name": "osTicket SSRF", "port": 54326, "owasp": "A10", "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
+    "auth-target": {"name": "Fuel CMS Auth", "port": 54327, "owasp": "A07", "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
+    "design-target": {"name": "Bus Pass IDOR", "port": 54328, "owasp": "A04", "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
+    "config-target": {"name": "CMSimple Config", "port": 54329, "owasp": "A05", "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
+    "crypto-target": {"name": "CuteNews Crypto", "port": 54330, "owasp": "A02", "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
+    "outdated-target": {"name": "Log4j Node", "port": 54331, "owasp": "A06", "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"}
 }
 
 recent_logs = deque(maxlen=20)
@@ -33,14 +34,15 @@ recent_attacks = deque(maxlen=15)
 
 ATTACK_PATTERNS = {
     "SQLi": re.compile(r"(%27|%22|\bunion\s+select\b|\bselect\s+.*from\b|--|#|\bOR\s+1=1\b|'\s+|--\s+)", re.IGNORECASE),
-    "LFI": re.compile(r"(\.\./|\.\.\\|%2e%2e|etc/passwd|etc/shadow|cgi-bin)", re.IGNORECASE),
+    "LFI": re.compile(r"(\.\.|%2e|etc/passwd|etc/shadow|cgi-bin)", re.IGNORECASE),
     "XSS": re.compile(r"(%3C|<)script(%3E|>)|alert\(|onerror=|onload=", re.IGNORECASE),
     "RCE": re.compile(r"(zerodium|\bsystem\s*\(|\beval\s*\(|\bwhoami\b|\bid\b|\bls\s+-)", re.IGNORECASE),
     "SSRF": re.compile(r"(localhost|127\.0\.0\.1|169\.254\.169\.254|0\.0\.0\.0|http:\/\/|https:\/\/)", re.IGNORECASE),
     "AUTH": re.compile(r"(\badmin\b|\blogin\b|\bauth\b|fuel|pages\/select\/)", re.IGNORECASE),
     "IDOR": re.compile(r"(viewid=|id=\d+)", re.IGNORECASE),
     "MISCONFIG": re.compile(r"(&login|\bpasswd=\b|\bpassword=\b|config|setup)", re.IGNORECASE),
-    "CRYPTO": re.compile(r"(\.db\.php|hash|md5|base64|encrypt|decrypt)", re.IGNORECASE)
+    "CRYPTO": re.compile(r"(\.db\.php|hash|md5|base64|encrypt|decrypt)", re.IGNORECASE),
+    "LOG4J": re.compile(r"(\$\{jndi:(ldap|rmi|dns|dns):\/\/)", re.IGNORECASE)
 }
 
 def detect_attack(log_line):
@@ -126,6 +128,7 @@ def generate_dashboard():
     table = Table(expand=True, border_style="cyan")
     table.add_column("Service", style="bold white")
     table.add_column("Port", justify="center", style="cyan")
+    table.add_column("OWASP", justify="center", style="bold yellow")
     table.add_column("Status", justify="center")
     table.add_column("Reqs", justify="right", style="green")
     table.add_column("Attacks", justify="right", style="red")
@@ -134,6 +137,7 @@ def generate_dashboard():
         table.add_row(
             data["name"], 
             str(data["port"]), 
+            data["owasp"],
             data["status"], 
             str(data["reqs"]), 
             str(data["attacks"]) if data["attacks"] == 0 else f"[bold red]{data['attacks']}[/]"

@@ -57,6 +57,7 @@ echo "Fuel Auth:  http://127.0.0.1:54327"
 echo "IDOR Node:  http://127.0.0.1:54328"
 echo "Config Node: http://127.0.0.1:54329"
 echo "Crypto Node: http://127.0.0.1:54330"
+echo "Log4j Node:  http://127.0.0.1:54331"
 echo "============================================================"
 
 # Trap Ctrl+C to stop services

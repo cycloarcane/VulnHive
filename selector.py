@@ -14,7 +14,8 @@ def get_selection():
         questionary.Choice("Auth Failure (Fuel CMS 1.4.1)", value="auth-target target-db"),
         questionary.Choice("Insecure Design (Bus Pass 1.0)", value="design-target target-db"),
         questionary.Choice("Security Misconfig (CMSimple 5.15)", value="config-target"),
-        questionary.Choice("Cryptographic Failure (CuteNews 1.4.5)", value="crypto-target"),
+        questionary.Choice("Cryptographic Failure (SweetRice 1.5.1)", value="crypto-target"),
+        questionary.Choice("Outdated Components (Log4j / Log4Shell)", value="outdated-target"),
     ]
 
     selected = questionary.checkbox(

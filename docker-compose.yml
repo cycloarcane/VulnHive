@@ -90,11 +90,19 @@ services:
     networks:
       - target-net
 
-  # Cryptographic Failure: CuteNews 1.4.5 (Weak MD5 Hashes)
+  # Cryptographic Failure: SweetRice 1.5.1
   crypto-target:
     build: ./targets/crypto
     ports:
       - "127.0.0.1:54330:80"
+    networks:
+      - target-net
+
+  # Outdated Components: Log4j (CVE-2021-44228)
+  outdated-target:
+    image: ghcr.io/christophetd/log4shell-vulnerable-app
+    ports:
+      - "127.0.0.1:54331:8080"
     networks:
       - target-net
 

@@ -20,6 +20,6 @@ USER appuser
 
 ENV PYTHONUNBUFFERED=1
 
-EXPOSE 8000
+EXPOSE 54321 54322
 
 CMD ["python", "app.py"]

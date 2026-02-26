@@ -1,0 +1,57 @@
+services:
+  # DB Service (Internal only, no ports exposed to host)
+  target-db:
+    image: mariadb:10.6
+    environment:
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_DATABASE: target_db
+    networks:
+      - target-net
+
+  # LFI/RCE: Apache 2.4.49 (CVE-2021-41773)
+  lfi-target:
+    build: ./targets/lfi
+    ports:
+      - "127.0.0.1:54321:80"
+    networks:
+      - target-net
+
+  # RCE: Atom CMS 2.0
+  rce-target:
+    build: ./targets/rce
+    ports:
+      - "127.0.0.1:54322:80"
+    depends_on:
+      - target-db
+    networks:
+      - target-net
+
+  # SQLi: Cuppa CMS v1.0
+  sqli-target:
+    build: ./targets/sqli
+    ports:
+      - "127.0.0.1:54323:80"
+    depends_on:
+      - target-db
+    networks:
+      - target-net
+
+  # XSS: WonderCMS 3.4.2
+  xss-target:
+    build: ./targets/xss
+    ports:
+      - "127.0.0.1:54324:80"
+    networks:
+      - target-net
+
+  # PHP Backdoor: PHP 8.1.0-dev
+  backdoor-target:
+    build: ./targets/backdoor
+    ports:
+      - "127.0.0.1:54325:80"
+    networks:
+      - target-net
+
+networks:
+  target-net:
+    driver: bridge

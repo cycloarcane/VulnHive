@@ -138,7 +138,7 @@ def generate_dashboard():
     is_locked = "OFF"
     try:
         net_info = subprocess.check_output(["docker", "network", "inspect", "test-server_target-net"]).decode()
-        if '"Internal": true' in net_info:
+        if '"com.docker.network.bridge.enable_ip_masquerade": "false"' in net_info:
             is_locked = "[bold red]ACTIVE (NO EGRESS)[/]"
         else:
             is_locked = "[bold green]DISABLED (EGRESS OPEN)[/]"

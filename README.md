@@ -35,6 +35,7 @@ The nodes within VulnHive map directly to critical vulnerabilities identified in
 | **XSS** | Cross-Site Scripting | WonderCMS 3.4.2 (CVE-2023-41425) | A03:2021-Injection |
 | **RCE** | Command Injection | Atom CMS 2.0 (Searchsploit 50840)| A03:2021-Injection |
 | **PHP Backdoor** | Supply Chain Attack| PHP 8.1.0-dev | A08:2021-Software and Data Integrity Failures |
+| **SSRF** | Request Forgery | osTicket 1.14.2 (CVE-2020-24881) | A10:2021-Server-Side Request Forgery |
 
 ## Installation & Usage
 

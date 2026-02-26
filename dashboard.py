@@ -20,7 +20,8 @@ services = {
     "rce-target": {"name": "Atom CMS RCE", "port": 54322, "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
     "sqli-target": {"name": "Cuppa SQLi", "port": 54323, "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
     "xss-target": {"name": "Wonder XSS", "port": 54324, "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
-    "backdoor-target": {"name": "PHP Backdoor", "port": 54325, "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"}
+    "backdoor-target": {"name": "PHP Backdoor", "port": 54325, "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
+    "ssrf-target": {"name": "osTicket SSRF", "port": 54326, "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"}
 }
 
 recent_logs = deque(maxlen=20)
@@ -30,7 +31,8 @@ ATTACK_PATTERNS = {
     "SQLi": re.compile(r"(%27|%22|union\s+select|select\s+.*from|--|#|OR\s+1=1|'\s+|--\s+)", re.IGNORECASE),
     "LFI": re.compile(r"(\.\.|%2e|etc/passwd|etc/shadow|cgi-bin)", re.IGNORECASE),
     "XSS": re.compile(r"(%3C|<)script(%3E|>)", re.IGNORECASE),
-    "RCE": re.compile(r"(zerodium|system\(|cmd=|eval\(|id|whoami|ls\s+-)", re.IGNORECASE)
+    "RCE": re.compile(r"(zerodium|system\(|cmd=|eval\(|id|whoami|ls\s+-)", re.IGNORECASE),
+    "SSRF": re.compile(r"(localhost|127\.0\.0\.1|169\.254\.169\.254|0\.0\.0\.0|http:\/\/|https:\/\/)", re.IGNORECASE)
 }
 
 def detect_attack(log_line):

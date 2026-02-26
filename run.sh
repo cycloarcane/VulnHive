@@ -28,7 +28,8 @@ echo "2) RCE (Atom CMS 2.0)           - Port 54322"
 echo "3) SQLi (Cuppa CMS v1.0)        - Port 54323"
 echo "4) XSS (WonderCMS 3.4.2)        - Port 54324"
 echo "5) PHP RCE (Backdoor)           - Port 54325"
-echo "6) ALL SERVICES"
+echo "6) SSRF (osTicket 1.14.2)       - Port 54326"
+echo "7) ALL SERVICES"
 echo ""
 read -p "Selection: " choice
 
@@ -40,7 +41,8 @@ for i in $choice; do
         3) SERVICES="$SERVICES sqli-target target-db" ;;
         4) SERVICES="$SERVICES xss-target" ;;
         5) SERVICES="$SERVICES backdoor-target" ;;
-        6) SERVICES="lfi-target rce-target sqli-target xss-target backdoor-target target-db" ;;
+        6) SERVICES="$SERVICES ssrf-target target-db" ;;
+        7) SERVICES="lfi-target rce-target sqli-target xss-target backdoor-target ssrf-target target-db" ;;
     esac
 done
 
@@ -60,6 +62,7 @@ echo "Atom RCE:   http://127.0.0.1:54322"
 echo "Cuppa SQLi: http://127.0.0.1:54323"
 echo "Wonder XSS: http://127.0.0.1:54324"
 echo "PHP B-door: http://127.0.0.1:54325/?cmd=id"
+echo "SSRF:       http://127.0.0.1:54326"
 echo "============================================================"
 
 # Trap Ctrl+C to stop services

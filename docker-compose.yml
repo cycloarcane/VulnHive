@@ -52,6 +52,16 @@ services:
     networks:
       - target-net
 
+  # SSRF: osTicket 1.14.2 (CVE-2020-24881)
+  ssrf-target:
+    build: ./targets/ssrf
+    ports:
+      - "127.0.0.1:54326:80"
+    depends_on:
+      - target-db
+    networks:
+      - target-net
+
 networks:
   target-net:
     driver: bridge

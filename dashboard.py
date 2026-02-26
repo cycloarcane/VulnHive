@@ -111,11 +111,11 @@ def generate_dashboard():
         Layout(name="main")
     )
     layout["main"].split_row(
-        Layout(name="left", ratio=1),
-        Layout(name="logs", ratio=2)
+        Layout(name="left", ratio=4),
+        Layout(name="logs", ratio=6)
     )
     layout["left"].split_column(
-        Layout(name="stats", ratio=2),
+        Layout(name="stats", ratio=1),
         Layout(name="reference", ratio=1)
     )
     layout["logs"].split_column(

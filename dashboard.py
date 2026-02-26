@@ -24,21 +24,23 @@ services = {
     "ssrf-target": {"name": "osTicket SSRF", "port": 54326, "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
     "auth-target": {"name": "Fuel CMS Auth", "port": 54327, "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
     "design-target": {"name": "Bus Pass IDOR", "port": 54328, "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
-    "config-target": {"name": "CMSimple Config", "port": 54329, "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"}
+    "config-target": {"name": "CMSimple Config", "port": 54329, "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
+    "crypto-target": {"name": "CuteNews Crypto", "port": 54330, "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"}
 }
 
 recent_logs = deque(maxlen=20)
 recent_attacks = deque(maxlen=15)
 
 ATTACK_PATTERNS = {
-    "SQLi": re.compile(r"(%27|%22|union\s+select|select\s+.*from|--|#|OR\s+1=1|'\s+|--\s+)", re.IGNORECASE),
-    "LFI": re.compile(r"(\.\.|%2e|etc/passwd|etc/shadow|cgi-bin)", re.IGNORECASE),
-    "XSS": re.compile(r"(%3C|<)script(%3E|>)", re.IGNORECASE),
-    "RCE": re.compile(r"(zerodium|system\(|cmd=|eval\(|id|whoami|ls\s+-)", re.IGNORECASE),
+    "SQLi": re.compile(r"(%27|%22|\bunion\s+select\b|\bselect\s+.*from\b|--|#|\bOR\s+1=1\b|'\s+|--\s+)", re.IGNORECASE),
+    "LFI": re.compile(r"(\.\./|\.\.\\|%2e%2e|etc/passwd|etc/shadow|cgi-bin)", re.IGNORECASE),
+    "XSS": re.compile(r"(%3C|<)script(%3E|>)|alert\(|onerror=|onload=", re.IGNORECASE),
+    "RCE": re.compile(r"(zerodium|\bsystem\s*\(|\beval\s*\(|\bwhoami\b|\bid\b|\bls\s+-)", re.IGNORECASE),
     "SSRF": re.compile(r"(localhost|127\.0\.0\.1|169\.254\.169\.254|0\.0\.0\.0|http:\/\/|https:\/\/)", re.IGNORECASE),
-    "AUTH": re.compile(r"(admin|login|auth|fuel|pages\/select\/)", re.IGNORECASE),
+    "AUTH": re.compile(r"(\badmin\b|\blogin\b|\bauth\b|fuel|pages\/select\/)", re.IGNORECASE),
     "IDOR": re.compile(r"(viewid=|id=\d+)", re.IGNORECASE),
-    "MISCONFIG": re.compile(r"(&login|passwd=|password=|config|setup)", re.IGNORECASE)
+    "MISCONFIG": re.compile(r"(&login|\bpasswd=\b|\bpassword=\b|config|setup)", re.IGNORECASE),
+    "CRYPTO": re.compile(r"(\.db\.php|hash|md5|base64|encrypt|decrypt)", re.IGNORECASE)
 }
 
 def detect_attack(log_line):

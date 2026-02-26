@@ -90,6 +90,14 @@ services:
     networks:
       - target-net
 
+  # Cryptographic Failure: CuteNews 1.4.5 (Weak MD5 Hashes)
+  crypto-target:
+    build: ./targets/crypto
+    ports:
+      - "127.0.0.1:54330:80"
+    networks:
+      - target-net
+
 networks:
   target-net:
     driver: bridge

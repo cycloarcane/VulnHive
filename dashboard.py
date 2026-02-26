@@ -133,8 +133,20 @@ def generate_dashboard():
     ascii_art.append(Text.from_markup("[bold red]╚██╗ ██╔╝██║   ██║██║     ██║╚██╗██║[/][bold green]██╔══██║██║╚██╗ ██╔╝██╔══╝  [/]\n"))
     ascii_art.append(Text.from_markup("[bold red] ╚████╔╝ ╚██████╔╝███████╗██║ ╚████║[/][bold green]██║  ██║██║ ╚████╔╝ ███████╗[/]\n"))
     ascii_art.append(Text.from_markup("[bold red]  ╚═══╝   ╚═════╝ ╚══════╝╚═╝  ╚═══╝[/][bold green]╚═╝  ╚═╝╚═╝  ╚═══╝  ╚══════╝[/]"))
+    
+    # Check for Lockdown Mode
+    is_locked = "OFF"
+    try:
+        net_info = subprocess.check_output(["docker", "network", "inspect", "test-server_target-net"]).decode()
+        if '"Internal": true' in net_info:
+            is_locked = "[bold red]ACTIVE (NO EGRESS)[/]"
+        else:
+            is_locked = "[bold green]DISABLED (EGRESS OPEN)[/]"
+    except:
+        pass
+
     header_content = Align.center(ascii_art)
-    layout["header"].update(Panel(header_content, subtitle="[bold yellow]THE REAL-WORLD VULNERABILITY HIVE[/]", border_style="magenta"))
+    layout["header"].update(Panel(header_content, subtitle=f"[bold yellow]THE REAL-WORLD VULNERABILITY HIVE[/] - [dim]LOCKDOWN:[/dim] {is_locked}", border_style="magenta"))
 
     # Stats Table (Sorted by OWASP)
     table = Table(expand=True, border_style="cyan", show_header=True, header_style="bold cyan")

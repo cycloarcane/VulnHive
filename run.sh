@@ -17,8 +17,8 @@ if ! command -v docker-compose &> /dev/null; then
     exit 1
 fi
 
-# Clean up any old selection
-rm -f .selection
+# Clean up any old selection and lockdown state
+rm -f .selection .lockdown
 
 # Isolated environment setup for interactive menu
 if command -v uv &> /dev/null; then
@@ -41,8 +41,16 @@ fi
 SERVICES=$(cat .selection)
 rm -f .selection
 
+# Check for Lockdown Mode
+COMPOSE_CMD="docker-compose"
+if [ -f ".lockdown" ]; then
+    echo -e "\e[1;31m[!] LOCKDOWN MODE ENABLED: Internet egress is blocked.\e[0m"
+    COMPOSE_CMD="docker-compose -f docker-compose.yml -f docker-compose.lockdown.yml"
+    rm -f .lockdown
+fi
+
 echo "Spinning up VulnHive nodes: $SERVICES..."
-docker-compose up -d $SERVICES
+$COMPOSE_CMD up -d $SERVICES
 
 echo ""
 echo "============================================================"

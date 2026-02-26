@@ -44,5 +44,18 @@ def get_selection():
     with open(".selection", "w") as f:
         f.write(unique_selection)
 
+    # Ask for Lockdown Mode
+    lockdown = questionary.confirm(
+        "Enable Lockdown Mode? (Zero Egress - Blocks Internet/Reverse Shells)",
+        default=False
+    ).ask()
+
+    if lockdown:
+        with open(".lockdown", "w") as f:
+            f.write("enabled")
+    else:
+        if os.path.exists(".lockdown"):
+            os.remove(".lockdown")
+
 if __name__ == "__main__":
     get_selection()

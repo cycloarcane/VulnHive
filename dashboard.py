@@ -23,7 +23,8 @@ services = {
     "backdoor-target": {"name": "PHP Backdoor", "port": 54325, "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
     "ssrf-target": {"name": "osTicket SSRF", "port": 54326, "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
     "auth-target": {"name": "Fuel CMS Auth", "port": 54327, "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
-    "design-target": {"name": "Bus Pass IDOR", "port": 54328, "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"}
+    "design-target": {"name": "Bus Pass IDOR", "port": 54328, "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"},
+    "config-target": {"name": "CMSimple Config", "port": 54329, "reqs": 0, "attacks": 0, "status": "[red]OFFLINE[/]"}
 }
 
 recent_logs = deque(maxlen=20)
@@ -36,7 +37,8 @@ ATTACK_PATTERNS = {
     "RCE": re.compile(r"(zerodium|system\(|cmd=|eval\(|id|whoami|ls\s+-)", re.IGNORECASE),
     "SSRF": re.compile(r"(localhost|127\.0\.0\.1|169\.254\.169\.254|0\.0\.0\.0|http:\/\/|https:\/\/)", re.IGNORECASE),
     "AUTH": re.compile(r"(admin|login|auth|fuel|pages\/select\/)", re.IGNORECASE),
-    "IDOR": re.compile(r"(viewid=|id=\d+)", re.IGNORECASE)
+    "IDOR": re.compile(r"(viewid=|id=\d+)", re.IGNORECASE),
+    "MISCONFIG": re.compile(r"(&login|passwd=|password=|config|setup)", re.IGNORECASE)
 }
 
 def detect_attack(log_line):

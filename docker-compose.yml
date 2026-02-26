@@ -82,6 +82,14 @@ services:
     networks:
       - target-net
 
+  # Security Misconfiguration: CMSimple 5.15 (Default Credentials)
+  config-target:
+    build: ./targets/config
+    ports:
+      - "127.0.0.1:54329:80"
+    networks:
+      - target-net
+
 networks:
   target-net:
     driver: bridge

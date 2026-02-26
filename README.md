@@ -1,21 +1,12 @@
 # VulnHive 🐝
 
-```text
-██╗   ██╗██╗   ██╗██╗     ███╗   ██╗██╗  ██╗██╗██╗   ██╗███████╗
-██║   ██║██║   ██║██║     ████╗  ██║██║  ██║██║██║   ██║██╔════╝
-██║   ██║██║   ██║██║     ██╔██╗ ██║███████║██║██║   ██║█████╗  
-╚██╗ ██╔╝██║   ██║██║     ██║╚██╗██║██╔══██║██║╚██╗ ██╔╝██╔══╝  
- ╚████╔╝ ╚██████╔╝███████╗██║ ╚████║██║  ██║██║ ╚████╔╝ ███████╗
-  ╚═══╝   ╚═════╝ ╚══════╝╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝  ╚═══╝  ╚══════╝
-```
-
 ![VulnHive SOC Terminal](dashboard.png)
 
 ## The Problem
 
 Setting up local instances of vulnerable software or complex hacking frameworks (like Metasploitable) is often frustrating, bloated, and clunky. Security researchers, penetration testers, and developers who simply want to test their automated tools or hone their skills are forced to manage a chaotic web of dependencies, configure multiple virtual machines, and risk exposing their host environments to actual threats. 
 
-VulnHive was built to solve this. It provides a lightweight, modular, and containerised suite of *real-world* software with documented CVEs. No "toy" vulnerabilities—just actual unpatched code running in a highly observable, isolated environment.
+VulnHive was built to solve this. It provides a lightweight, modular, and containerised suite of *real-world* software with documented CVEs. No "toy" vulnerabilities: just actual unpatched code running in a highly observable, isolated environment.
 
 ## The Solution
 

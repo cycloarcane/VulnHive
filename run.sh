@@ -11,6 +11,11 @@ echo -e "\e[1;31m  ╚═══╝   ╚═════╝ ╚══════
 echo -e "\e[1;33m                [ THE REAL-WORLD VULNERABILITY HIVE ]\e[0m"
 echo ""
 
+echo "============================================================"
+echo "                [ VULNHIVE: THE REAL-WORLD VULNERABILITY HIVE ]"
+echo "============================================================"
+echo ""
+
 # Check for docker-compose
 if ! command -v docker-compose &> /dev/null; then
     echo "Error: docker-compose is not installed."

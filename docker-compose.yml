@@ -72,6 +72,16 @@ services:
     networks:
       - target-net
 
+  # Insecure Design: Bus Pass Management System 1.0 (IDOR)
+  design-target:
+    build: ./targets/design
+    ports:
+      - "127.0.0.1:54328:80"
+    depends_on:
+      - target-db
+    networks:
+      - target-net
+
 networks:
   target-net:
     driver: bridge

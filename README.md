@@ -37,6 +37,7 @@ The nodes within VulnHive map directly to critical vulnerabilities identified in
 | **PHP Backdoor** | Supply Chain Attack| PHP 8.1.0-dev | A08:2021-Software and Data Integrity Failures |
 | **SSRF** | Request Forgery | osTicket 1.14.2 (CVE-2020-24881) | A10:2021-Server-Side Request Forgery |
 | **Auth Failure** | Pre-Auth RCE | Fuel CMS 1.4.1 (Searchsploit 47138)| A07:2021-Identification and Authentication Failures |
+| **Insecure Design**| IDOR / Broken Access | Bus Pass Management 1.0 (Searchsploit 50263)| A04:2021-Insecure Design |
 
 ## Installation & Usage
 

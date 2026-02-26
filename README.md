@@ -16,6 +16,7 @@ VulnHive leverages Docker Compose to instantly spin up specific vulnerable nodes
 
 ### Protective Measures
 *   **Strict Local Binding:** All exposed services are explicitly bound to `127.0.0.1`. This ensures that even if your router has UPnP enabled or you are on a public Wi-Fi network, the vulnerable services cannot be accessed by external actors.
+*   **Zero-Egress Lockdown Mode:** Upon startup, users can toggle "Lockdown Mode". When enabled, the internal Docker network is stripped of its gateway, preventing containers from reaching the internet. This effectively neutralises reverse shells and exfiltration attempts whilst maintaining internal connectivity (e.g. App to Database).
 *   **Database Isolation:** The internal MariaDB database (used by the CMS nodes) is not exposed to the host machine at all. It exists purely within the internal Docker network.
 *   **Containerised:** Exploits that result in Remote Code Execution (RCE) are restricted to the filesystem of the specific Docker container, providing a protective barrier for your host OS.
 

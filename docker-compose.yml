@@ -106,6 +106,14 @@ services:
     networks:
       - target-net
 
+  # Logging Failure: Custom Silent-Admin node
+  logging-target:
+    build: ./targets/logging
+    ports:
+      - "127.0.0.1:54332:80"
+    networks:
+      - target-net
+
 networks:
   target-net:
     driver: bridge

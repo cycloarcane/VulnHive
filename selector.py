@@ -16,6 +16,7 @@ def get_selection():
         questionary.Choice("Security Misconfig (CMSimple 5.15)", value="config-target"),
         questionary.Choice("Cryptographic Failure (SweetRice 1.5.1)", value="crypto-target"),
         questionary.Choice("Outdated Components (Log4j / Log4Shell)", value="outdated-target"),
+        questionary.Choice("Logging Failure (Silent-Admin)", value="logging-target"),
     ]
 
     selected = questionary.checkbox(

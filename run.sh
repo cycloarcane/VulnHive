@@ -58,6 +58,7 @@ echo "IDOR Node:  http://127.0.0.1:54328"
 echo "Config Node: http://127.0.0.1:54329"
 echo "Crypto Node: http://127.0.0.1:54330"
 echo "Log4j Node:  http://127.0.0.1:54331"
+echo "Logging Fail: http://127.0.0.1:54332"
 echo "============================================================"
 
 # Trap Ctrl+C to stop services

